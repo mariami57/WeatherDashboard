@@ -11,29 +11,62 @@
             <ul id="search-results"></ul>
         </div>
     </div>
+<script>
+const input = document.getElementById("search-input");
+const resultsList = document.getElementById("search-results");
 
 
-    <script>
-        document.getElementById("search-input").addEventListener("keypress", function(e){
-           if (e.key === "Enter"){
-               const city = e.target.value;
-               fetch(`/weather/api/weather/?city=${city}`)
-                   .then(response => response.json())
-                   .then(data => {
-                       const resultsList = document.getElementById("search-results");
-                       resultsList.innerHTML = "" ;
+input.addEventListener("input", function () {
+    const query = this.value;
 
-                       if (data.error) {
-                           resultsList.innerHTML = `<li>${data.error}</li>`;
-                       } else {
-                           resultsList.innerHTML = `
-                            <li>
-                                ${data.name} - ${data.main.temp}°C, ${data.weather[0].description}
-                            </li>
-                           `;
-                       }
-                   });
-           }
+    if (query.length < 2) {
+        resultsList.innerHTML = "";
+        return;
+    }
+
+    fetch(`/weather/api/cities/?q=${query}`)
+        .then(response => response.json())
+        .then(data => {
+            resultsList.innerHTML = "";
+            data.forEach(city => {
+                const li = document.createElement("li");
+                li.textContent = city;
+
+                li.addEventListener("click", () => {
+                    input.value = city;
+                    resultsList.innerHTML = "";
+                    fetchWeather(city);
+                });
+
+                resultsList.appendChild(li);
+            });
         });
-    </script>
+});
+
+
+input.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        fetchWeather(this.value);
+    }
+});
+
+
+function fetchWeather(city) {
+    fetch(`/weather/api/weather/?city=${city}`)
+        .then(response => response.json())
+        .then(data => {
+            resultsList.innerHTML = "";
+
+            if (data.error) {
+                resultsList.innerHTML = `<li>${data.error}</li>`;
+            } else {
+                resultsList.innerHTML = `
+                    <li>
+                        ${data.name} - ${data.main.temp}°C, ${data.weather[0].description}
+                    </li>
+                `;
+            }
+        });
+}
+</script>
 {% endblock %}

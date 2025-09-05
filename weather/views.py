@@ -1,6 +1,6 @@
+from django.conf import settings
+from django.contrib.sites import requests
 from django.http import JsonResponse
-from django.shortcuts import render
-
 from Weather_Dashboard.utils import get_weather
 
 
@@ -16,3 +16,18 @@ def weather_api(request):
         return JsonResponse(data)
     else:
         return JsonResponse({'error': 'Could not fetch weather'}, status=500)
+
+def city_suggestions(request):
+    query = request.GET.get('q', '')
+    if not query:
+        return JsonResponse([], safe=False)
+    url = (
+        f"http://api.openweathermap.org/geo/1.0/direct?q={query}&limit=5&appid={settings.API_KEY}"
+    )
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        results = [f"{city['name']}, {city['country']}" for city in data]
+        return JsonResponse(results, safe=False)
+    else:
+        return JsonResponse([], safe=False)

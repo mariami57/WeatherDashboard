@@ -17,6 +17,12 @@
     border: 2px solid rgb(63, 63, 253);
 }
 
+#search-input:focus {
+    cursor:pointer;
+     border: 3px solid rgb(252 212 118);
+     outline: none;
+}
+
 .logo {
     width: 150px;
     height: 150px;
