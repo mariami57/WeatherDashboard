@@ -1,0 +1,33 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="SEARCH..."/>
+        <ul id="search-results"></ul>
+    </div>
+
+    <script>
+        document.getElementById("search-input").addEventListener("keypress", function(e){
+           if (e.key === "Enter"){
+               const city = e.target.value;
+               fetch(`/weather/api/weather/?city=${city}`)
+                   .then(response => response.json())
+                   .then(data => {
+                       const resultsList = document.getElementById("search-results");
+                       resultsList.innerHTML = "" ;
+
+                       if (data.error) {
+                           resultsList.innerHTML = `<li>${data.error}</li>`;
+                       } else {
+                           resultsList.innerHTML = `
+                            <li>
+                                ${data.name} - ${data.main.temp}°C, ${data.weather[0].description}
+                            </li>
+                           `;
+                       }
+                   });
+           }
+        });
+    </script>
+{% endblock %}
