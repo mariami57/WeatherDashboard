@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from decouple import config
 
-ENV = config("DJANGO_ENV", default="dev")
+ENV = config('DJANGO_ENV', default='dev')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,22 +23,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
-API_KEY = config("API_KEY")
+SECRET_KEY = config('SECRET_KEY')
+API_KEY = config('API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ENV == "dev":
-    DEBUG = config ("DEBUG", default=True, cast=bool)
-    ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
+if ENV == 'dev':
+    DEBUG = config ('DEBUG', default=True, cast=bool)
+    ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 else:
     DEBUG = False
-    ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(",")
+    ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS").split(",")
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(',')
 
 
 # Application definition
-
+PROJECT_APPS = [
+    'common',
+    'weather',
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+] + PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
