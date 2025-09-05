@@ -2,10 +2,13 @@
 {% load static %}
 
 {% block content %}
-    <div class="search-bar">
-        <input type="text" id="search-input" placeholder="SEARCH..."/>
-        <ul id="search-results"></ul>
+    <div class="content-container">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="SEARCH CITY..."/>
+            <ul id="search-results"></ul>
+        </div>
     </div>
+
 
     <script>
         document.getElementById("search-input").addEventListener("keypress", function(e){
