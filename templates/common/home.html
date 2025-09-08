@@ -50,6 +50,7 @@ input.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         fetchWeather(this.value);
     }
+
 });
 
 
@@ -62,13 +63,27 @@ function fetchWeather(city) {
             if (data.error) {
                 weatherResult.innerHTML = `<p>${data.error}</p>`;
             } else {
+                const iconCode = data.weather[0].icon;
+                const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
                 weatherResult.innerHTML = `
-                    <p>
-                        ${data.name} - ${data.main.temp}°C, ${data.weather[0].description}
-                    </p>
+                    <div style="display:flex; align-items: center; gap:10px;">
+                        <img src="${iconUrl}" alt = "${data.weather[0].description}">
+                        <div>
+                            <p style="margin:0; font-weight:bold;">${data.name}</p>
+                            <p style="margin:0;">${data.main.temp}°C, ${data.weather[0].description}</p>
+                        </div>
+                    </div>
+
                 `;
+                input.value = "";
             }
+
+
         });
+
+
 }
+
+
 </script>
 {% endblock %}
