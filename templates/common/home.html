@@ -17,25 +17,25 @@ const resultsList = document.getElementById("search-results");
 
 
 input.addEventListener("input", function () {
-    const query = this.value;
+    const query = this.value.trim();
 
     if (query.length < 2) {
         resultsList.innerHTML = "";
         return;
     }
 
-    fetch(`/weather/api/cities/?q=${query}`)
+    fetch(`/weather/api/cities/?q=${encodeURIComponent(query)}`)
         .then(response => response.json())
         .then(data => {
             resultsList.innerHTML = "";
             data.forEach(city => {
                 const li = document.createElement("li");
-                li.textContent = city;
+                li.textContent = city.display;
 
                 li.addEventListener("click", () => {
-                    input.value = city;
+                    input.value = city.display;
                     resultsList.innerHTML = "";
-                    fetchWeather(city);
+                    fetchWeather(city.display);
                 });
 
                 resultsList.appendChild(li);

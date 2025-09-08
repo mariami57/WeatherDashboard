@@ -39,13 +39,15 @@
 #search-results{
     position: absolute;
     top: 100%;
+    left: 0;
     list-style:none;
-    width:450px;
+    width:500px;
     border-radius: 10px;
     z-index: 100;
     background: white;
-    max-height: 200px;
-    margin-top:0;
+    max-height: 100vh;
+    margin:0;
+    padding: 0;
 }
 
 #search-results li {
@@ -55,4 +57,5 @@
 
 #search-results li:hover {
     background: rgb(252 212 118);
+    border-radius: 10px;
 }
