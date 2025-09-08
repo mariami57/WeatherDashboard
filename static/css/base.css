@@ -27,3 +27,32 @@
     width: 150px;
     height: 150px;
 }
+
+.search-bar {
+    position: relative;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    width: 500px;
+}
+
+#search-results{
+    position: absolute;
+    top: 100%;
+    list-style:none;
+    width:450px;
+    border-radius: 10px;
+    z-index: 100;
+    background: white;
+    max-height: 200px;
+    margin-top:0;
+}
+
+#search-results li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+#search-results li:hover {
+    background: rgb(252 212 118);
+}

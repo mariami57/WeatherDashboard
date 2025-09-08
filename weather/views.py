@@ -1,5 +1,5 @@
+import requests
 from django.conf import settings
-from django.contrib.sites import requests
 from django.http import JsonResponse
 from Weather_Dashboard.utils import get_weather
 
