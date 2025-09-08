@@ -59,3 +59,15 @@
     background: rgb(252 212 118);
     border-radius: 10px;
 }
+
+#weather-result{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: green;
+    width:500px;
+    border-radius: 10px;
+    max-height: 100vh;
+    margin:0;
+    padding: 0;
+}

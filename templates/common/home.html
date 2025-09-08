@@ -9,11 +9,13 @@
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="SEARCH CITY..."/>
             <ul id="search-results"></ul>
+            <div id="weather-result"></div>
         </div>
     </div>
 <script>
 const input = document.getElementById("search-input");
 const resultsList = document.getElementById("search-results");
+const weatherResult = document.getElementById("weather-result");
 
 
 input.addEventListener("input", function () {
@@ -52,18 +54,18 @@ input.addEventListener("keypress", function (e) {
 
 
 function fetchWeather(city) {
-    fetch(`/weather/api/weather/?city=${city}`)
+    fetch(`/weather/api/weather/?city=${encodeURIComponent(city)}`)
         .then(response => response.json())
         .then(data => {
             resultsList.innerHTML = "";
 
             if (data.error) {
-                resultsList.innerHTML = `<li>${data.error}</li>`;
+                weatherResult.innerHTML = `<p>${data.error}</p>`;
             } else {
-                resultsList.innerHTML = `
-                    <li>
+                weatherResult.innerHTML = `
+                    <p>
                         ${data.name} - ${data.main.temp}°C, ${data.weather[0].description}
-                    </li>
+                    </p>
                 `;
             }
         });
