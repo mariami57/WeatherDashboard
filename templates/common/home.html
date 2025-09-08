@@ -10,6 +10,7 @@
             <input type="text" id="search-input" placeholder="SEARCH CITY..."/>
             <ul id="search-results"></ul>
             <div id="weather-result"></div>
+            <div id="forecast-result"></div>
         </div>
     </div>
 <script>
@@ -33,6 +34,9 @@ input.addEventListener("input", function () {
             data.forEach(city => {
                 const li = document.createElement("li");
                 li.textContent = city.display;
+
+                li.dataset.lat = city.lat;
+                li.dataset.lon = city.lon;
 
                 li.addEventListener("click", () => {
                     input.value = city.display;
@@ -66,22 +70,59 @@ function fetchWeather(city) {
                 const iconCode = data.weather[0].icon;
                 const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
                 weatherResult.innerHTML = `
-                    <div style="display:flex; align-items: center; gap:10px;">
-                        <img src="${iconUrl}" alt = "${data.weather[0].description}">
-                        <div>
-                            <p style="margin:0; font-weight:bold;">${data.name}</p>
-                            <p style="margin:0;">${data.main.temp}°C, ${data.weather[0].description}</p>
+
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div style="display:flex; align-items: center; gap:10px;">
+                            <img src="${iconUrl}" alt = "${data.weather[0].description}">
+                            <div>
+                                <p style="margin:0; font-weight:bold;">${data.name}</p>
+                                <p style="margin:0;">${data.main.temp}°C, ${data.weather[0].description}</p>
+                            </div>
                         </div>
+
+                        <a href="#" class="seven-days"> See weather for the next 7 days</a>
                     </div>
 
                 `;
                 input.value = "";
+                const sevenDaysLink = weatherResult.querySelector(".seven-days");
+                sevenDaysLink.addEventListener("click", (e) =>{
+                    e.preventDefault();
+                    fetchSevenDayForecast(data.coord.lat, data.coord.lon)
+                });
             }
 
 
         });
 
+}
 
+function fetchSevenDayForecast(lat, lon) {
+    fetch(`/weather/api/onecall/?lat=${lat}&lon=${lon}`)
+        .then(res => res.json())
+        .then(data => {
+            const forecastContainer = document.getElementById("forecast-result");
+            forecastContainer.innerHTML = "";
+
+            data.daily.slice(0, 7).forEach(day =>{
+                const date = new Date(day.dt * 1000);
+                const iconUrl = `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`;
+
+                const div = document.createElement("div");
+                div.style.display = "flex";
+                div.style.alignItems = "center";
+                div.style.gap = "10px";
+                div.style.marginBottom = "8px";
+
+                div.innerHTML = `
+                    <p style="margin:0; width:100px;">${date.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' })}</p>
+                    <img src="${iconUrl}" alt="${day.weather[0].description}">
+                    <p style="margin:0;">${day.temp.day}°C, ${day.weather[0].description}</p>
+                `;
+                forecastContainer.appendChild(div);
+
+            })
+        })
 }
 
 
