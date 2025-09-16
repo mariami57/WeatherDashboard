@@ -120,7 +120,7 @@ function fetchSevenDayForecast(lat, lon) {
                 div.style.marginBottom = "8px";
 
                 div.innerHTML = `
-                    <p style="margin:0; width:120px;">${date.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' })}</p>
+                    <p style="padding-left:20px; margin:0; width:120px;">${date.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' })}</p>
                     <img src="${iconUrl}" alt="${day.description}">
                     <p style="margin:0;">${Math.round(day.temp_min)}°C – ${Math.round(day.temp_max)}°C, ${day.description}</p>
                 `;
