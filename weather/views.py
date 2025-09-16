@@ -1,5 +1,7 @@
 import csv
-from idlelib import query
+from datetime import datetime
+from collections import defaultdict
+
 from pathlib import Path
 
 import requests
@@ -65,19 +67,40 @@ def city_suggestions(request):
 
     return JsonResponse(results, safe=False)
 
-def onecall_forecast(request):
+def forecast(request):
     lat = request.GET.get("lat")
     lon = request.GET.get("lon")
 
     if not lat or not lon:
         return JsonResponse({"error": "Missing lat/lon parameters"}, status=400)
 
-    url = f"https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&units=metric&appid={settings.API_KEY}"
+    url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&exclude=minutely,hourly,alerts&units=metric&appid={settings.API_KEY}"
 
     try:
         response = requests.get(url)
-        response.raise_for_status()
         data = response.json()
-        return JsonResponse(data)
+
+        daily = defaultdict(list)
+        for entry in data.get("list",[]):
+            date = datetime.fromtimestamp(entry["dt"]).date()
+            daily[date].append(entry)
+
+        forecast = []
+
+        for date, entries in daily.items():
+            if isinstance(date, str):
+                date_str = date
+            else:
+                date_str = date.isoformat()
+            temps = [float(e["main"]["temp"]) for e in entries if "main" in e]
+            weather = entries[0]["weather"][0] if entries and "weather" in entries[0] else {"description": "N/A", "icon": "01d"}
+            forecast.append({
+                "date": date_str,
+                "temp_min": min(temps) if temps else None,
+                "temp_max": max(temps)if temps else None,
+                "description": weather.get("description", ""),
+                "icon":weather.get("icon", ""),
+            })
+        return JsonResponse({"daily":forecast[:5]})
     except requests.RequestException as e:
-        return JsonResponse({"error": f"Could not fetch weather: {e}"}, status=500)
+        return JsonResponse({"error": f"Could not fetch forecast: {e}"}, status=500)

@@ -80,7 +80,7 @@ function fetchWeather(city) {
                             </div>
                         </div>
 
-                        <a href="#" class="seven-days"> See weather for the next 7 days</a>
+                        <a href="#" class="seven-days"> See weather for the next 5 days</a>
                     </div>
 
                 `;
@@ -98,15 +98,20 @@ function fetchWeather(city) {
 }
 
 function fetchSevenDayForecast(lat, lon) {
-    fetch(`/weather/api/onecall/?lat=${lat}&lon=${lon}`)
+    fetch(`/weather/api/forecast/?lat=${lat}&lon=${lon}`)
         .then(res => res.json())
         .then(data => {
             const forecastContainer = document.getElementById("forecast-result");
             forecastContainer.innerHTML = "";
 
-            data.daily.slice(0, 7).forEach(day =>{
-                const date = new Date(day.dt * 1000);
-                const iconUrl = `https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`;
+            if (data.error) {
+                forecastContainer.innerHTML = `<p style="color:red;">${data.error}</p>`
+                return;
+            }
+
+            data.daily.forEach(day =>{
+                const date = new Date(day.date);
+                const iconUrl = `https://openweathermap.org/img/wn/${day.icon}@2x.png`;
 
                 const div = document.createElement("div");
                 div.style.display = "flex";
@@ -115,14 +120,19 @@ function fetchSevenDayForecast(lat, lon) {
                 div.style.marginBottom = "8px";
 
                 div.innerHTML = `
-                    <p style="margin:0; width:100px;">${date.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' })}</p>
-                    <img src="${iconUrl}" alt="${day.weather[0].description}">
-                    <p style="margin:0;">${day.temp.day}°C, ${day.weather[0].description}</p>
+                    <p style="margin:0; width:120px;">${date.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' })}</p>
+                    <img src="${iconUrl}" alt="${day.description}">
+                    <p style="margin:0;">${Math.round(day.temp_min)}°C – ${Math.round(day.temp_max)}°C, ${day.description}</p>
                 `;
                 forecastContainer.appendChild(div);
 
-            })
+            });
         })
+
+        .catch(err => {
+            document.getElementById("forecast-result").innerHTML =
+                `<p style="color:red;">Error fetching forecast: ${err}</p>`;
+        });
 }
 
 
