@@ -74,6 +74,16 @@ function fetchWeather(city) {
                 const iconCode = data.weather[0].icon;
                 const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
+                function isFavourite(city) {
+                    const favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+                    return favourites.includes(city);
+                }
+
+                let favButtonHTML = "";
+                if (!isFavourite(city)) {
+                    favButtonHTML = `<button class="save-fav" data-city="${city}">⭐ Save to favourites</button>`;
+                }
+
                 weatherResult.innerHTML = `
 
                     <div style="display:flex; flex-direction:column; gap:10px;">
@@ -82,7 +92,7 @@ function fetchWeather(city) {
                             <div>
                                 <p style="margin:0; font-weight:bold;">${data.name}</p>
                                 <p style="margin:0;">${data.main.temp}°C, ${data.weather[0].description}</p>
-                                <button class="save-fav" data-city"${data.name}">⭐ Save to favourites</button>
+                                ${favButtonHTML}
                             </div>
                         </div>
 
@@ -90,11 +100,15 @@ function fetchWeather(city) {
                     </div>
 
                 `;
-                const favButton = weatherResult.querySelector(".save-fav");
-                favButton.addEventListener("click", () => {
-                    saveFavourite(favButtton.dataset.city);
-                    renderFavourites();
+
+                 const favButton = weatherResult.querySelector(".save-fav");
+                 favButton.addEventListener("click", () => {
+                     saveFavourite(favButton.dataset.city);
+                     renderFavourites();
+                     favButton.style.display = "none";
                 });
+
+
                 input.value = "";
                 const fiveDaysLink = weatherResult.querySelector(".five-days");
                 fiveDaysLink.addEventListener("click", (e) =>{
