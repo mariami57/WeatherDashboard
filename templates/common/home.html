@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <div>
+    <div class="top-bar">
     <img class="logo" src="{% static 'images/wt_logo.png' %}" alt="website-logo"/>
     <div id="favourites-container">
         <div id="favourites-header" class="dropdown-header">Favourite Cities</div>
@@ -38,19 +38,19 @@ input.addEventListener("input", function () {
         .then(data => {
             resultsList.innerHTML = "";
             data.forEach(city => {
-                const li = document.createElement("a");
-                a.textContent = city.display;
+                const li = document.createElement("li");
+                li.textContent = city.display;
 
-                a.dataset.lat = city.lat;
-                a.dataset.lon = city.lon;
+                li.dataset.lat = city.lat;
+                li.dataset.lon = city.lon;
 
-                a.addEventListener("click", () => {
+                li.addEventListener("click", () => {
                     input.value = city.display;
                     resultsList.innerHTML = "";
                     fetchWeather(city.display);
                 });
 
-                resultsList.appendChild(a);
+                resultsList.appendChild(li);
             });
         });
 });
