@@ -93,7 +93,8 @@ def forecast(request):
             else:
                 date_str = date.isoformat()
             temps = [float(e["main"]["temp"]) for e in entries if "main" in e]
-            weather = entries[0]["weather"][0] if entries and "weather" in entries[0] else {"description": "N/A", "icon": "01d"}
+            day_icon_entry = next((e for e in entries if datetime.fromtimestamp(e["dt"]).hour == 12), entries[0])
+            weather = day_icon_entry["weather"][0] if day_icon_entry else {"description": "N/A", "icon": "01d"}
             forecast.append({
                 "date": date_str,
                 "temp_min": min(temps) if temps else None,

@@ -73,6 +73,13 @@
     padding: 0;
 }
 
+.forecast-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
 #forecast-result{
     position: absolute;
     top: 150%;
