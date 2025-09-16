@@ -99,3 +99,16 @@
     color: rgb(252 212 118);
 }
 
+.dropdown-list {
+    display: none;
+    margin-top: 5px;
+    padding-left: 20px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.dropdown-header {
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}

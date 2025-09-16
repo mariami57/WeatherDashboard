@@ -5,11 +5,13 @@
     <div>
     <img class="logo" src="{% static 'images/wt_logo.png' %}" alt="website-logo"/>
     <div id="favourites-container">
-        <h3>Favourite Cities</h3>
-        <ul id="favourites-list"></ul>
+        <div id="favourites-header" class="dropdown-header">Favourite Cities</div>
+        <ul id="favourites-list" class="dropdown-list"></ul>
     </div>
     </div>
+
     <div class="content-container">
+
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="SEARCH CITY..."/>
             <ul id="search-results"></ul>
@@ -36,19 +38,19 @@ input.addEventListener("input", function () {
         .then(data => {
             resultsList.innerHTML = "";
             data.forEach(city => {
-                const li = document.createElement("li");
-                li.textContent = city.display;
+                const li = document.createElement("a");
+                a.textContent = city.display;
 
-                li.dataset.lat = city.lat;
-                li.dataset.lon = city.lon;
+                a.dataset.lat = city.lat;
+                a.dataset.lon = city.lon;
 
-                li.addEventListener("click", () => {
+                a.addEventListener("click", () => {
                     input.value = city.display;
                     resultsList.innerHTML = "";
                     fetchWeather(city.display);
                 });
 
-                resultsList.appendChild(li);
+                resultsList.appendChild(a);
             });
         });
 });
@@ -102,19 +104,25 @@ function fetchWeather(city) {
                 `;
 
                  const favButton = weatherResult.querySelector(".save-fav");
-                 favButton.addEventListener("click", () => {
+                 if (favButton){
+                     favButton.addEventListener("click", () => {
                      saveFavourite(favButton.dataset.city);
                      renderFavourites();
                      favButton.style.display = "none";
-                });
+                    });
+                 }
+
 
 
                 input.value = "";
                 const fiveDaysLink = weatherResult.querySelector(".five-days");
-                fiveDaysLink.addEventListener("click", (e) =>{
+                if (fiveDaysLink){
+                    fiveDaysLink.addEventListener("click", (e) =>{
                     e.preventDefault();
                     fetchFiveDayForecast(data.coord.lat, data.coord.lon)
-                });
+                    });
+                }
+
             }
 
 
@@ -203,5 +211,16 @@ function renderFavourites() {
 }
 
 document.addEventListener("DOMContentLoaded", renderFavourites);
+const header = document.getElementById("favourites-header");
+const list = document.getElementById("favourites-list");
+
+header.addEventListener("click", () => {
+    if (list.style.display === "none" || list.style.display === "") {
+        list.style.display = "block";
+    } else {
+        list.style.display = "none";
+    }
+});
+
 </script>
 {% endblock %}
