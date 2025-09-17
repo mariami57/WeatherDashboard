@@ -7,6 +7,7 @@
     <div id="favourites-container">
         <div id="favourites-header" class="dropdown-header">
             <i class="fa-solid fa-map-pin"></i>
+             <span class="tooltip-text">Favourite cities</span>
         </div>
         <ul id="favourites-list" class="dropdown-list"></ul>
     </div>
@@ -67,6 +68,7 @@ input.addEventListener("keypress", function (e) {
 
 
 function fetchWeather(city) {
+    document.getElementById("forecast-result").innerHTML="";
     fetch(`/weather/api/weather/?city=${encodeURIComponent(city)}`)
         .then(response => response.json())
         .then(data => {
@@ -85,7 +87,7 @@ function fetchWeather(city) {
 
                 let favButtonHTML = "";
                 if (!isFavourite(city)) {
-                    favButtonHTML = `<button class="save-fav" data-city="${city}">⭐ Save to favourites</button>`;
+                    favButtonHTML = `<button class="save-fav" data-city="${city}">⭐ Save city to favourites</button>`;
                 }
 
                 weatherResult.innerHTML = `
