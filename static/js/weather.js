@@ -78,7 +78,7 @@ function fetchWeather(city) {
                                 </div>
                                 <div class="dropdown-header">
                                     ${favButtonHTML}
-                                    <span class="tooltip-text">Save to favourite cities</span>
+                                    <span class="tooltip-text-save">Save to favourite cities</span>
                                 </div>
                                 
                             </div>

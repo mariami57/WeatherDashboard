@@ -16,7 +16,7 @@
     user-select: none;
 }
 
-.dropdown-header:hover .tooltip-text {
+.dropdown-header:hover .tooltip-text, .dropdown-header:hover .tooltip-text-save {
   visibility: visible;
   opacity: 1;
 }
@@ -49,10 +49,14 @@
     background: none;
     position: relative;
     bottom: 90%;
-    left: 500%;
+    left: 600%;
     border-radius: 15px;
     border: none;
     padding-top: 0;
     padding-bottom: 0;
     font-size: 0.8em;
+}
+
+.fa-map-pin {
+    color: #f84179;
 }

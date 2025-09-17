@@ -45,3 +45,23 @@
 .five-days:hover{
     color: rgb(252 212 118);
 }
+
+.tooltip-text-save {
+    visibility: hidden;
+    background-color: rgb(142 197 219);
+    color: #000;
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1000;
+    top: 30%;
+    left: 420%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    font-size: 0.875rem;
+    border: 1px solid rgb(142 197 219);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
