@@ -62,7 +62,8 @@ function fetchWeather(city) {
 
                 let favButtonHTML = "";
                 if (!isFavourite(city)) {
-                    favButtonHTML = `<button class="save-fav" data-city="${city}">📍 Save city to favourites</button>`;
+                    favButtonHTML = `<button class="save-fav" data-city="${city}">📍</button>`;
+
                 }
 
                 weatherResult.innerHTML = `
@@ -70,10 +71,16 @@ function fetchWeather(city) {
                     <div style="display:flex; flex-direction:column; gap:10px;">
                         <div style="display:flex; align-items: center; gap:10px;">
                             <img src="${iconUrl}" alt = "${data.weather[0].description}">
-                            <div>
-                                <p style="margin:0; font-weight:bold;">${data.name}</p>
-                                <p style="margin:0;">${data.main.temp}°C, ${data.weather[0].description}</p>
-                                ${favButtonHTML}
+                            <div class="weather-results">
+                                <div>
+                                    <p style="margin:0; font-weight:bold;">${data.name}</p>
+                                    <p style="margin:0;">${Math.round(data.main.temp)}°C, ${data.weather[0].description}</p>
+                                </div>
+                                <div class="dropdown-header">
+                                    ${favButtonHTML}
+                                    <span class="tooltip-text">Save to favourite cities</span>
+                                </div>
+                                
                             </div>
                         </div>
 

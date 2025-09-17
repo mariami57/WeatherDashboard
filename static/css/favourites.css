@@ -46,9 +46,12 @@
 
 
 .save-fav {
+    background: none;
+    position: relative;
+    bottom: 90%;
+    left: 500%;
     border-radius: 15px;
     border: none;
-    padding-right: 10px;
     padding-top: 0;
     padding-bottom: 0;
     font-size: 0.8em;

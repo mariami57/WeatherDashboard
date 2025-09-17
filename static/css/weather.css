@@ -10,6 +10,12 @@
     padding: 0;
 }
 
+.weather-results{
+    display:flex;
+    justify-content: space-between;
+
+}
+
 .forecast-item {
     display: flex;
     align-items: center;
