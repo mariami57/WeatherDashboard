@@ -5,7 +5,9 @@
     <div class="top-bar">
     <img class="logo" src="{% static 'images/wt_logo.png' %}" alt="website-logo"/>
     <div id="favourites-container">
-        <div id="favourites-header" class="dropdown-header">Favourite Cities</div>
+        <div id="favourites-header" class="dropdown-header">
+            <i class="fa-solid fa-map-pin"></i>
+        </div>
         <ul id="favourites-list" class="dropdown-list"></ul>
     </div>
     </div>
@@ -214,13 +216,24 @@ document.addEventListener("DOMContentLoaded", renderFavourites);
 const header = document.getElementById("favourites-header");
 const list = document.getElementById("favourites-list");
 
+const favContainer = document.getElementById("favourites-container");
 header.addEventListener("click", () => {
     if (list.style.display === "none" || list.style.display === "") {
         list.style.display = "block";
+        header.style.display="none";
     } else {
         list.style.display = "none";
+        header.style.display="block";
     }
+
 });
+
+document.addEventListener("click", (e) =>{
+    if (!favContainer.contains(e.target)) {
+        list.style.display = "none";
+        header.style.display = "block";
+    }
+})
 
 </script>
 {% endblock %}
