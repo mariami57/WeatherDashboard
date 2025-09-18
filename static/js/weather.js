@@ -41,7 +41,7 @@ input.addEventListener("keypress", function (e) {
 
 });
 
-
+const favBtn = document.getElementById("fav-btn");
 function fetchWeather(city) {
     document.getElementById("forecast-result").innerHTML="";
     fetch(`/weather/api/weather/?city=${encodeURIComponent(city)}`)
@@ -55,17 +55,6 @@ function fetchWeather(city) {
                 const iconCode = data.weather[0].icon;
                 const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 
-                function isFavourite(city) {
-                    const favourites = JSON.parse(localStorage.getItem("favourites")) || [];
-                    return favourites.includes(city);
-                }
-
-                let favButtonHTML = "";
-                if (!isFavourite(city)) {
-                    favButtonHTML = `<button class="save-fav" data-city="${city}">📍</button>`;
-
-                }
-
                 weatherResult.innerHTML = `
 
                     <div style="display:flex; flex-direction:column; gap:10px;">
@@ -76,11 +65,6 @@ function fetchWeather(city) {
                                     <p style="margin:0; font-weight:bold;">${data.name}</p>
                                     <p style="margin:0;">${Math.round(data.main.temp)}°C, ${data.weather[0].description}</p>
                                 </div>
-                                <div class="dropdown-header">
-                                    ${favButtonHTML}
-                                    <span class="tooltip-text-save">Save to favourite cities</span>
-                                </div>
-                                
                             </div>
                         </div>
 
@@ -89,15 +73,14 @@ function fetchWeather(city) {
 
                 `;
 
-                 const favButton = weatherResult.querySelector(".save-fav");
-                 if (favButton){
-                     favButton.addEventListener("click", () => {
-                     saveFavourite(favButton.dataset.city);
-                     renderFavourites();
-                     favButton.style.display = "none";
-                    });
-                 }
+                function isFavourite(city) {
+                    const favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+                    return favourites.includes(city);
+                }
+                favBtn.dataset.city = city;
+                favBtn.style.display = isFavourite(city) ? "none" : "inline-block";
 
+                input.value = "";
 
 
                 input.value = "";
@@ -115,6 +98,15 @@ function fetchWeather(city) {
         });
 
 }
+
+
+ if (favButton){
+     favButton.addEventListener("click", () => {
+     saveFavourite(favButton.dataset.city);
+     renderFavourites();
+     favButton.style.display = "none";
+    });
+ }
 
 function fetchFiveDayForecast(lat, lon) {
     fetch(`/weather/api/forecast/?lat=${lat}&lon=${lon}`)

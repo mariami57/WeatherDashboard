@@ -61,8 +61,5 @@ p,a, li, button, span, input, h3 {
     flex-direction:column;
     align-items:center;
     font-size: 0.8em;
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*width: 100%;*/
 
 }
