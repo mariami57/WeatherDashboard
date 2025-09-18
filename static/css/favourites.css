@@ -18,7 +18,27 @@
     user-select: none;
 }
 
-.dropdown-header:hover .tooltip-text, .dropdown-header:hover .tooltip-text-save {
+.tooltip-text-save {
+    visibility: hidden;
+    background-color: rgb(142 197 219);
+    color: #000;
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1000;
+    top: 70%;
+    left: 100%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    font-size: 0.875rem;
+    border: 1px solid rgb(142 197 219);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.dropdown-header:hover .tooltip-text, .button-fav-section:hover .tooltip-text-save {
   visibility: visible;
   opacity: 1;
 }
@@ -26,12 +46,16 @@
 .button-fav-section{
     padding: 15px 20px;
     position: relative;
+    display: inline-block;
     top: 0;
     left: 61%;
     font-weight: bold;
     cursor: pointer;
     z-index: 2000;
 }
+
+
+
 
 .dropdown-list {
     display: none;
