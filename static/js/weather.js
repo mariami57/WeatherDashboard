@@ -82,8 +82,14 @@ function fetchWeather(city) {
 
                 input.value = "";
 
+                 if (favBtn){
+                     favBtn.addEventListener("click", () => {
+                     saveFavourite(favBtn.dataset.city);
+                     renderFavourites();
+                     favBtn.style.display = "none";
+                    });
+                 }
 
-                input.value = "";
                 const fiveDaysLink = weatherResult.querySelector(".five-days");
                 if (fiveDaysLink){
                     fiveDaysLink.addEventListener("click", (e) =>{
@@ -100,13 +106,7 @@ function fetchWeather(city) {
 }
 
 
- if (favButton){
-     favButton.addEventListener("click", () => {
-     saveFavourite(favButton.dataset.city);
-     renderFavourites();
-     favButton.style.display = "none";
-    });
- }
+
 
 function fetchFiveDayForecast(lat, lon) {
     fetch(`/weather/api/forecast/?lat=${lat}&lon=${lon}`)
