@@ -1,0 +1,99 @@
+#favourites-container {
+    margin-top:10px;
+    padding-right:5px;
+    position: relative;
+}
+
+
+.dropdown-header {
+    color: rgb(17 57 98);
+    font-size:1.3em;
+    background-color: rgb(142 197 219);
+    padding: 15px 20px;
+    border-radius: 60%;
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tooltip-text-save {
+    visibility: hidden;
+    background-color: rgb(142 197 219);
+    color: #000;
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1000;
+    top: 70%;
+    left: 100%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    font-size: 0.875rem;
+    border: 1px solid rgb(142 197 219);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.dropdown-header:hover .tooltip-text, .button-fav-section:hover .tooltip-text-save {
+  visibility: visible;
+  opacity: 1;
+}
+
+.button-fav-section{
+    padding: 15px 20px;
+    position: relative;
+    display: inline-block;
+    top: 0;
+    left: 61%;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2000;
+}
+
+
+
+
+.dropdown-list {
+    display: none;
+    margin-top: 5px;
+    width: 200px;
+    list-style: none;
+    padding: 0;
+    cursor: pointer;
+    background-color: rgb(142 197 219);
+    border-radius: 15px;
+    position: absolute;
+    right: 100%;
+    z-index: 1000;
+}
+
+.dropdown-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 15px;
+
+}
+
+.dropdown-list li:hover, .save-fav:hover{
+   background-color:rgb(252 212 118);
+   cursor: pointer;
+}
+
+
+.save-fav {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 15px;
+    display:none;
+}
+
+.fa-map-pin {
+    color: #f84179;
+}
