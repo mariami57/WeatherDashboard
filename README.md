@@ -40,7 +40,7 @@ Weather_Dashboard/
 ## Installation
 ### 1. Clone the repository:
 <pre>
-  git clone https://github.com/your-username/weather-dashboard.git
+  git clone https://github.com/mariami57/weather-dashboard.git
   cd weather-dashboard
 </pre>
 
@@ -87,7 +87,7 @@ Weather_Dashboard/
 This app is deployed on Azure.
 Here’s an overview of the deployment setup:
 
-○ Database in Production: (SQLite for small apps, PostgreSQL/MySQL for scalable apps)
+○ Database in Production:  PostgreSQL/MySQL 
 
 ○ Static & Media Files: (Handled by Django’s collectstatic)
 
