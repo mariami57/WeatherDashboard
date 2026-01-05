@@ -83,27 +83,3 @@ Weather_Dashboard/
 <pre>
   GET /forecast?lat=51.5074&lon=-0.1278
  </pre>
-## Deployment
-This app is deployed on Azure.
-Here’s an overview of the deployment setup:
-
-○ Database in Production:  PostgreSQL/MySQL 
-
-○ Static & Media Files: (Handled by Django’s collectstatic)
-
-○ Environment Variables:
-<br>
-This project uses a .env file to manage secrets and environment configuration.
-A template.env file is included in the repository – you can copy it and rename it to .env before running the project
-
-- SECRET_KEY – Django secret key
-
-- DEBUG – Set to False in production
-
-- ALLOWED_HOSTS – Your domain or IP
-
-- CSRF_TRUSTED_ORIGINS - ensures Django accepts form submissions from your deployed domains
-  
-## Live Demo
-Check out the live version here:
-[Weather Today](https://weathertoday-d0h5ezb2g0hvfkg0.italynorth-01.azurewebsites.net/)
